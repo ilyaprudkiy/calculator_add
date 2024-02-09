@@ -1,4 +1,4 @@
-import 'package:calculator_add/widget/menu_button.dart';
+import 'package:calculator_add/calculator_app.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,7 +10,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home:
-    CalculatorApp(),);
+    return const MaterialApp(home: CalculatorApp());
   }
 }

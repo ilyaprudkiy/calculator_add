@@ -1,3 +1,4 @@
+import 'package:calculator_add/widgets/button_calculator.dart';
 import 'package:flutter/material.dart';
 
 class CalculatorApp extends StatefulWidget {
@@ -55,25 +56,6 @@ class _CalculatorAppState extends State<CalculatorApp> {
     }
   }
 
-  Widget ButtonCalculator(String butontxt, Color buttoncolor, Color txtcolor) {
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(80, 80),
-          maximumSize: const Size(100, 100),
-          primary: buttoncolor,
-          shape: const CircleBorder(),
-          padding: const EdgeInsets.all(20),
-        ),
-        onPressed: () => _onPressed(butontxt),
-        child: Text(
-          butontxt,
-          style: TextStyle(
-            color: txtcolor,
-            fontSize: 35,
-          ),
-        ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,11 +69,11 @@ class _CalculatorAppState extends State<CalculatorApp> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Text(
                     _output,
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 100, color: Colors.white),
+                    style: const TextStyle(fontSize: 100, color: Colors.white),
                   ),
                 ),
               ],
@@ -99,51 +81,45 @@ class _CalculatorAppState extends State<CalculatorApp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ButtonCalculator('AC', Colors.white70, Colors.black),
-                ButtonCalculator('+/-', Colors.white70, Colors.black),
-                ButtonCalculator('%', Colors.white70, Colors.black),
-                ButtonCalculator('/', Colors.orange, Colors.white),
+                ButtonCalculator(
+                    'AC', Colors.white70, Colors.black, _onPressed),
+                ButtonCalculator(
+                    '+/-', Colors.white70, Colors.black, _onPressed),
+                ButtonCalculator('%', Colors.white70, Colors.black, _onPressed),
+                ButtonCalculator('/', Colors.orange, Colors.white, _onPressed),
               ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ButtonCalculator('7', Colors.white24, Colors.white),
-                ButtonCalculator('8', Colors.white24, Colors.white),
-                ButtonCalculator('9', Colors.white24, Colors.white),
-                ButtonCalculator('*', Colors.orange, Colors.white),
+                ButtonCalculator('7', Colors.white24, Colors.white, _onPressed),
+                ButtonCalculator('8', Colors.white24, Colors.white, _onPressed),
+                ButtonCalculator('9', Colors.white24, Colors.white, _onPressed),
+                ButtonCalculator('*', Colors.orange, Colors.white, _onPressed),
               ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ButtonCalculator('4', Colors.white24, Colors.white),
-                ButtonCalculator('5', Colors.white24, Colors.white),
-                ButtonCalculator('6', Colors.white24, Colors.white),
-                ButtonCalculator('-', Colors.orange, Colors.white),
+                ButtonCalculator('4', Colors.white24, Colors.white, _onPressed),
+                ButtonCalculator('5', Colors.white24, Colors.white, _onPressed),
+                ButtonCalculator('6', Colors.white24, Colors.white, _onPressed),
+                ButtonCalculator('-', Colors.orange, Colors.white, _onPressed),
               ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ButtonCalculator('1', Colors.white24, Colors.white),
-                ButtonCalculator('2', Colors.white24, Colors.white),
-                ButtonCalculator('3', Colors.white24, Colors.white),
-                ButtonCalculator('+', Colors.orange, Colors.white),
+                ButtonCalculator('1', Colors.white24, Colors.white, _onPressed),
+                ButtonCalculator('2', Colors.white24, Colors.white, _onPressed),
+                ButtonCalculator('3', Colors.white24, Colors.white, _onPressed),
+                ButtonCalculator('+', Colors.orange, Colors.white, _onPressed),
               ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -162,8 +138,8 @@ class _CalculatorAppState extends State<CalculatorApp> {
                     ),
                   ),
                 ),
-                ButtonCalculator(',', Colors.white24, Colors.white),
-                ButtonCalculator('=', Colors.orange, Colors.white),
+                ButtonCalculator(',', Colors.white24, Colors.white, _onPressed),
+                ButtonCalculator('=', Colors.orange, Colors.white, _onPressed),
               ],
             ),
           ],
