@@ -56,40 +56,6 @@ class _CalculatorAppState extends State<CalculatorApp> {
     }
   }
 
-  TextStyle _getTextStyle(String _output) {
-    if (_output.length >= 6) {
-      return TextStyle(
-        fontSize: 55,
-        color: Colors.white,
-      );
-    } else if (_output.length >= 7) {
-      return TextStyle(
-        fontSize: 45,
-        color: Colors.white,
-      );
-    } else if (_output.length >= 7) {
-      return TextStyle(
-        fontSize: 45,
-        color: Colors.white,
-      );
-    } else if (_output.length >= 8) {
-      return TextStyle(
-        fontSize: 20,
-        color: Colors.white,
-      );
-    } else if (_output.length >= 9) {
-      return TextStyle(
-        fontSize: 15,
-        color: Colors.white,
-      );
-    } else {
-      return TextStyle(
-        fontSize: 90,
-        color: Colors.white,
-      );
-    }
-  }
-
   String addSpaces(String _output) {
     String result = '';
     int count = 0;
@@ -99,7 +65,7 @@ class _CalculatorAppState extends State<CalculatorApp> {
       count++;
 
       if (count % 3 == 0 && i > 0) {
-        result = ' ' + result;
+        result = ' $result';
       }
     }
 
@@ -108,30 +74,21 @@ class _CalculatorAppState extends State<CalculatorApp> {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller = TextEditingController();
-    _controller.text = _output.toString();
-    final int maxLength = 9;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                  child: Text(
-                    _output.length <= maxLength
-                        ? addSpaces(_output)
-                        : addSpaces(_output.substring(0, maxLength)),
-                    textAlign: TextAlign.right,
-                    style: _getTextStyle(_output),
-                  ),
-                ),
-              ],
+          SizedBox(
+            width: double.infinity,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerRight,
+              child: Text(
+                _output,
+                textAlign: TextAlign.end,
+                style: const TextStyle(color: Colors.white, fontSize: 100),
+              ),
             ),
           ),
           Row(
