@@ -1,21 +1,24 @@
+import 'package:calculator_add/widgets/calculator_,model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ButtonCalculator extends StatelessWidget {
   const ButtonCalculator(
     this.btnTxt,
     this.btnColor,
     this.txtColor,
-    this.onBtnClicked, {
+   {
     super.key,
   });
 
   final String btnTxt;
   final Color btnColor;
   final Color txtColor;
-  final Function(String) onBtnClicked;
+
 
   @override
   Widget build(BuildContext context) {
+    final model = context.read<CalculatorViewModel>();
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(80, 80), backgroundColor: btnColor,
@@ -23,7 +26,7 @@ class ButtonCalculator extends StatelessWidget {
           shape: const CircleBorder(),
           padding: const EdgeInsets.all(20),
         ),
-        onPressed: () => onBtnClicked(btnTxt),
+        onPressed: () => model.onPressed(btnTxt),
         child: Text(
           btnTxt,
           style: TextStyle(

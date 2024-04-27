@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 class CalculatorViewModel extends ChangeNotifier {
   String output = '0';
   String currentNumber = '';
-  double result = 0;
+  num? result = 0;
   final String buttonTxtZero = '0';
 
   Future<void> onPressed(String text) async {
     if (text == '=') {
       result = calculate();
       output = result.toString();
-      currentNumber = '';
+      currentNumber = output;
       notifyListeners();
     } else if (text == 'AC') {
       output = '0';
@@ -24,10 +24,10 @@ class CalculatorViewModel extends ChangeNotifier {
     }
   }
 
-  double calculate() {
+   num? calculate() {
     final parts = currentNumber.split(RegExp(r'(\+|\-|\*|\/)'));
-    final operandOne = double.parse(parts[0]);
-    final operandTwo = double.parse(parts[1]);
+    final operandOne = int.parse(parts[0]);
+    final operandTwo = int.parse(parts[1]);
 
     final operator = currentNumber.replaceAll(RegExp(r'[\d\.]'), '');
 
@@ -42,7 +42,7 @@ class CalculatorViewModel extends ChangeNotifier {
         if (operandOne != 0 && operandTwo != 0) {
           return operandOne / operandTwo;
         } else {
-          return double.infinity;
+          return  null;
         }
       default:
         return 0.0;

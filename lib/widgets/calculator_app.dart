@@ -1,17 +1,11 @@
-
 import 'package:calculator_add/theme/button_calculator.dart';
 import 'package:calculator_add/widgets/calculator_,model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CalculatorApp extends StatefulWidget {
+class CalculatorApp extends StatelessWidget {
   const CalculatorApp({super.key});
 
-  @override
-  _CalculatorAppState createState() => _CalculatorAppState();
-}
-
-class _CalculatorAppState extends State<CalculatorApp> {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<CalculatorViewModel>();
@@ -32,59 +26,99 @@ class _CalculatorAppState extends State<CalculatorApp> {
               ),
             ),
           ),
-          Row(
+         const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              ButtonCalculator('AC', Colors.white70, Colors.black),
+              ButtonCalculator('+/-', Colors.white70, Colors.black),
               ButtonCalculator(
-                  'AC', Colors.white70, Colors.black, model.onPressed),
+                '%',
+                Colors.white70,
+                Colors.black,
+              ),
               ButtonCalculator(
-                  '+/-', Colors.white70, Colors.black, model.onPressed),
-              ButtonCalculator(
-                  '%', Colors.white70, Colors.black, model.onPressed),
-              ButtonCalculator(
-                  '/', Colors.orange, Colors.white, model.onPressed),
+                '/',
+                Colors.orange,
+                Colors.white,
+              ),
             ],
           ),
           const SizedBox(height: 15),
-          Row(
+          const   Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ButtonCalculator(
-                  '7', Colors.white24, Colors.white, model.onPressed),
+                '7',
+                Colors.white24,
+                Colors.white,
+              ),
               ButtonCalculator(
-                  '8', Colors.white24, Colors.white, model.onPressed),
+                '8',
+                Colors.white24,
+                Colors.white,
+              ),
               ButtonCalculator(
-                  '9', Colors.white24, Colors.white, model.onPressed),
+                '9',
+                Colors.white24,
+                Colors.white,
+              ),
               ButtonCalculator(
-                  '*', Colors.orange, Colors.white, model.onPressed),
+                '*',
+                Colors.orange,
+                Colors.white,
+              ),
             ],
           ),
           const SizedBox(height: 15),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ButtonCalculator(
-                  '4', Colors.white24, Colors.white, model.onPressed),
+                '4',
+                Colors.white24,
+                Colors.white,
+              ),
               ButtonCalculator(
-                  '5', Colors.white24, Colors.white, model.onPressed),
+                '5',
+                Colors.white24,
+                Colors.white,
+              ),
               ButtonCalculator(
-                  '6', Colors.white24, Colors.white, model.onPressed),
+                '6',
+                Colors.white24,
+                Colors.white,
+              ),
               ButtonCalculator(
-                  '-', Colors.orange, Colors.white, model.onPressed),
+                '-',
+                Colors.orange,
+                Colors.white,
+              ),
             ],
           ),
           const SizedBox(height: 15),
-          Row(
+          const   Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ButtonCalculator(
-                  '1', Colors.white24, Colors.white, model.onPressed),
+                '1',
+                Colors.white24,
+                Colors.white,
+              ),
               ButtonCalculator(
-                  '2', Colors.white24, Colors.white, model.onPressed),
+                '2',
+                Colors.white24,
+                Colors.white,
+              ),
               ButtonCalculator(
-                  '3', Colors.white24, Colors.white, model.onPressed),
+                '3',
+                Colors.white24,
+                Colors.white,
+              ),
               ButtonCalculator(
-                  '+', Colors.orange, Colors.white, model.onPressed),
+                '+',
+                Colors.orange,
+                Colors.white,
+              ),
             ],
           ),
           const SizedBox(height: 15),
@@ -106,14 +140,18 @@ class _CalculatorAppState extends State<CalculatorApp> {
                   ),
                 ),
               ),
-              ButtonCalculator(
-                  ',', Colors.white24, Colors.white, model.onPressed),
-              ButtonCalculator(
-                  '=', Colors.orange, Colors.white, model.onPressed),
+              const   ButtonCalculator(',', Colors.white24, Colors.white),
+              const   ButtonCalculator('=', Colors.orange, Colors.white),
             ],
           ),
         ],
       ),
     );
   }
+
+  static Widget create() => ChangeNotifierProvider(
+        create: (_) => CalculatorViewModel(),
+        lazy: false,
+        child: const CalculatorApp(),
+      );
 }
