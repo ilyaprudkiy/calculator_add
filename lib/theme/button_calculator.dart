@@ -18,9 +18,8 @@ class ButtonCalculator extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          minimumSize: const Size(80, 80),
+          minimumSize: const Size(80, 80), backgroundColor: btnColor,
           maximumSize: const Size(100, 100),
-          primary: btnColor,
           shape: const CircleBorder(),
           padding: const EdgeInsets.all(20),
         ),
