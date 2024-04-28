@@ -24,7 +24,7 @@ class ButtonCalculator extends StatelessWidget {
           minimumSize: const Size(80, 80), backgroundColor: btnColor,
           maximumSize: const Size(100, 100),
           shape: const CircleBorder(),
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
         ),
         onPressed: () => model.onPressed(btnTxt),
         child: Text(

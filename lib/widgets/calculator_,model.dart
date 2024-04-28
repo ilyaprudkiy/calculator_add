@@ -3,19 +3,36 @@ import 'package:flutter/cupertino.dart';
 class CalculatorViewModel extends ChangeNotifier {
   String output = '0';
   String currentNumber = '';
-  num? result = 0;
+  dynamic result = 0;
   final String buttonTxtZero = '0';
 
   Future<void> onPressed(String text) async {
     if (text == '=') {
       result = calculate();
-      output = result.toString();
+      output = result;
       currentNumber = output;
       notifyListeners();
     } else if (text == 'AC') {
       output = '0';
       currentNumber = '';
       result = 0;
+      notifyListeners();
+    } else if (text == '%') {
+      int number = int.parse(currentNumber);
+      double percentage = number / 100;
+      output = percentage.toString();
+      currentNumber = output;
+      notifyListeners();
+    } else if (text == '+/-') {
+        if (currentNumber != '') {
+          if (currentNumber.startsWith('-')) {
+            currentNumber = currentNumber.substring(1);
+          } else {
+            currentNumber = '-$currentNumber';
+          }
+          output = currentNumber;
+          notifyListeners();
+      }
       notifyListeners();
     } else {
       currentNumber += text;
@@ -24,7 +41,7 @@ class CalculatorViewModel extends ChangeNotifier {
     }
   }
 
-   num? calculate() {
+  num? calculate() {
     final parts = currentNumber.split(RegExp(r'(\+|\-|\*|\/)'));
     final operandOne = int.parse(parts[0]);
     final operandTwo = int.parse(parts[1]);
@@ -42,7 +59,7 @@ class CalculatorViewModel extends ChangeNotifier {
         if (operandOne != 0 && operandTwo != 0) {
           return operandOne / operandTwo;
         } else {
-          return  null;
+          return null;
         }
       default:
         return 0.0;
