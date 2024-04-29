@@ -9,7 +9,7 @@ class CalculatorViewModel extends ChangeNotifier {
   Future<void> onPressed(String text) async {
     if (text == '=') {
       result = calculate();
-      output = result;
+      output = result.toString();
       currentNumber = output;
       notifyListeners();
     } else if (text == 'AC') {
@@ -24,14 +24,14 @@ class CalculatorViewModel extends ChangeNotifier {
       currentNumber = output;
       notifyListeners();
     } else if (text == '+/-') {
-        if (currentNumber != '') {
-          if (currentNumber.startsWith('-')) {
-            currentNumber = currentNumber.substring(1);
-          } else {
-            currentNumber = '-$currentNumber';
-          }
-          output = currentNumber;
-          notifyListeners();
+      if (currentNumber != '') {
+        if (currentNumber.startsWith('-')) {
+          currentNumber = currentNumber.substring(1);
+        } else {
+          currentNumber = '-$currentNumber';
+        }
+        output = currentNumber;
+        notifyListeners();
       }
       notifyListeners();
     } else {
@@ -43,8 +43,8 @@ class CalculatorViewModel extends ChangeNotifier {
 
   num? calculate() {
     final parts = currentNumber.split(RegExp(r'(\+|\-|\*|\/)'));
-    final operandOne = int.parse(parts[0]);
-    final operandTwo = int.parse(parts[1]);
+    var operandOne = double.parse(parts[0]);
+    var operandTwo = double.parse(parts[1]);
 
     final operator = currentNumber.replaceAll(RegExp(r'[\d\.]'), '');
 
@@ -78,7 +78,6 @@ class CalculatorViewModel extends ChangeNotifier {
         result = ' $result';
       }
     }
-
     return result;
   }
 }

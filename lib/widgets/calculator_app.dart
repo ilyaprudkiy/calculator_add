@@ -17,7 +17,7 @@ class CalculatorApp extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           EntryFieldWidget(model: model),
-          const OperandWidget(),
+          const ButtonConversionWidget(),
           const SizedBox(height: 15),
           const NumbersMenuOneWidget(),
           const SizedBox(height: 15),
@@ -66,8 +66,10 @@ class ButtonZeroAndResult extends StatelessWidget {
             ),
           ),
         ),
-        const ButtonCalculator(',', Colors.white24, Colors.white),
-        const ButtonCalculator('=', Colors.orange, Colors.white),
+        const ButtonCalculator('.'),
+        const ButtonOperator(
+          '=',
+        ),
       ],
     );
   }
@@ -83,25 +85,11 @@ class NumbersMenuThreeWidget extends StatelessWidget {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ButtonCalculator(
-          '1',
-          Colors.white24,
-          Colors.white,
-        ),
-        ButtonCalculator(
-          '2',
-          Colors.white24,
-          Colors.white,
-        ),
-        ButtonCalculator(
-          '3',
-          Colors.white24,
-          Colors.white,
-        ),
-        ButtonCalculator(
+        ButtonCalculator('1'),
+        ButtonCalculator('2'),
+        ButtonCalculator('3'),
+        ButtonOperator(
           '+',
-          Colors.orange,
-          Colors.white,
         ),
       ],
     );
@@ -118,25 +106,11 @@ class NumbersMenuTwoWidget extends StatelessWidget {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ButtonCalculator(
-          '4',
-          Colors.white24,
-          Colors.white,
-        ),
-        ButtonCalculator(
-          '5',
-          Colors.white24,
-          Colors.white,
-        ),
-        ButtonCalculator(
-          '6',
-          Colors.white24,
-          Colors.white,
-        ),
-        ButtonCalculator(
+        ButtonCalculator('4'),
+        ButtonCalculator('5'),
+        ButtonCalculator('6'),
+        ButtonOperator(
           '-',
-          Colors.orange,
-          Colors.white,
         ),
       ],
     );
@@ -153,25 +127,11 @@ class NumbersMenuOneWidget extends StatelessWidget {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ButtonCalculator(
-          '7',
-          Colors.white24,
-          Colors.white,
-        ),
-        ButtonCalculator(
-          '8',
-          Colors.white24,
-          Colors.white,
-        ),
-        ButtonCalculator(
-          '9',
-          Colors.white24,
-          Colors.white,
-        ),
-        ButtonCalculator(
+        ButtonCalculator('7'),
+        ButtonCalculator('8'),
+        ButtonCalculator('9'),
+        ButtonOperator(
           '*',
-          Colors.orange,
-          Colors.white,
         ),
       ],
     );
@@ -193,18 +153,20 @@ class EntryFieldWidget extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.scaleDown,
         alignment: Alignment.centerRight,
-        child: Text(
-          model.output,
-          textAlign: TextAlign.end,
-          style: const TextStyle(color: Colors.white, fontSize: 100),
-        ),
+        child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Text(
+              model.output,
+              textAlign: TextAlign.end,
+              style: const TextStyle(color: Colors.white, fontSize: 100),
+            )),
       ),
     );
   }
 }
 
-class OperandWidget extends StatelessWidget {
-  const OperandWidget({
+class ButtonConversionWidget extends StatelessWidget {
+  const ButtonConversionWidget({
     super.key,
   });
 
@@ -213,17 +175,11 @@ class OperandWidget extends StatelessWidget {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ButtonCalculator('AC', Colors.white70, Colors.black),
-        ButtonCalculator('+/-', Colors.white70, Colors.black),
-        ButtonCalculator(
-          '%',
-          Colors.white70,
-          Colors.black,
-        ),
-        ButtonCalculator(
+        ButtonConversion('AC'),
+        ButtonConversion('+/-'),
+        ButtonConversion('%'),
+        ButtonOperator(
           '/',
-          Colors.orange,
-          Colors.white,
         ),
       ],
     );
