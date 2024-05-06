@@ -1,139 +1,98 @@
-import 'package:calculator_add/theme/button_calculator.dart';
 import 'package:calculator_add/widgets/calculator_,model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:calculator_add/theme/button_calculator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class CalculatorApp extends StatelessWidget {
-  const CalculatorApp({super.key});
+class CalculatorApp extends StatefulWidget {
+  const CalculatorApp({Key? key}) : super(key: key);
 
+  @override
+  CalculatorAppState createState() => CalculatorAppState();
+
+  static Widget create() => ChangeNotifierProvider(
+        create: (_) => CalculatorViewModel(),
+        child: CalculatorApp(),
+        lazy: false,
+      );
+}
+
+class CalculatorAppState extends State<CalculatorApp> {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<CalculatorViewModel>();
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          EntryFieldWidget(model: model),
-          const ButtonConversionWidget(),
-          const SizedBox(height: 15),
-          const NumbersMenuOneWidget(),
-          const SizedBox(height: 15),
-          const NumbersMenuTwoWidget(),
-          const SizedBox(height: 15),
-          const NumbersMenuThreeWidget(),
-          const SizedBox(height: 15),
-          ButtonZeroAndResult(model: model),
-        ],
-      ),
+      body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                EntryFieldWidget(model: model),
+                Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      child: _onButtonsGrid(),
+                    )),
+              ])),
     );
   }
 
-  static Widget create() => ChangeNotifierProvider(
-        create: (_) => CalculatorViewModel(),
-        lazy: false,
-        child: const CalculatorApp(),
-      );
-}
+  Widget _onButtonsGrid() {
+    return Expanded(
+        child: Container(
+      width: 355,
+      height: 100,
+      child: StaggeredGridView.countBuilder(
+        physics: const NeverScrollableScrollPhysics(),
+        crossAxisCount: 4,
+        itemCount: buttons.length,
+        itemBuilder: (BuildContext context, int index) {
+          final button = buttons[index];
+          return _buildButton(
+            button,
+            index,
+          );
+        },
+        staggeredTileBuilder: (int index) {
+          return StaggeredTile.count(buttons[index].value == '0' ? 2 : 1, 1);
+        },
+        mainAxisSpacing: 10.0,
+        crossAxisSpacing: 10.0,
+      ),
+    ));
+  }
 
-class ButtonZeroAndResult extends StatelessWidget {
-  const ButtonZeroAndResult({
-    super.key,
-    required this.model,
-  });
-
-  final CalculatorViewModel model;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.fromLTRB(34, 20, 128, 20),
-            shape: const StadiumBorder(),
-            backgroundColor: Colors.white24,
-          ),
-          onPressed: () => model.onPressed(model.buttonTxtZero),
+  Widget _buildButton(Button button, int index) {
+    final model = context.watch<CalculatorViewModel>();
+    final resultOperation = model.resultOperation;
+    final currentNumber = model.currentNumber;
+    return GestureDetector(
+      onTap: () => model.onButtonPressed(button.value),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 4 * (buttons[index].value == '0' ? 2 : 1),
+        alignment: button.value == '0' ? Alignment.centerLeft : Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: button.value == resultOperation && currentNumber == ''
+                ? Colors.white
+                : button.buttonColor),
+        child: Padding( padding:  button.value == '0' ? const  EdgeInsets.only(left: 20) : EdgeInsets.zero,
           child: Text(
-            model.buttonTxtZero,
-            style: const TextStyle(
-              fontSize: 35,
-              color: Colors.white,
+            button.value,
+            style: TextStyle(
+              fontSize: 28.0,
+              fontWeight: FontWeight.bold,
+              color: button.value == resultOperation &&
+                      currentNumber == ''
+                  ? Colors.orange
+                  : button.textColor,
             ),
           ),
         ),
-        const ButtonCalculator('.'),
-        const ButtonOperator(
-          '=',
-        ),
-      ],
-    );
-  }
-}
-
-class NumbersMenuThreeWidget extends StatelessWidget {
-  const NumbersMenuThreeWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ButtonCalculator('1'),
-        ButtonCalculator('2'),
-        ButtonCalculator('3'),
-        ButtonOperator(
-          '+',
-        ),
-      ],
-    );
-  }
-}
-
-class NumbersMenuTwoWidget extends StatelessWidget {
-  const NumbersMenuTwoWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ButtonCalculator('4'),
-        ButtonCalculator('5'),
-        ButtonCalculator('6'),
-        ButtonOperator(
-          '-',
-        ),
-      ],
-    );
-  }
-}
-
-class NumbersMenuOneWidget extends StatelessWidget {
-  const NumbersMenuOneWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ButtonCalculator('7'),
-        ButtonCalculator('8'),
-        ButtonCalculator('9'),
-        ButtonOperator(
-          '*',
-        ),
-      ],
+      ),
     );
   }
 }
@@ -148,40 +107,29 @@ class EntryFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        alignment: Alignment.centerRight,
-        child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Text(
-              model.output,
-              textAlign: TextAlign.end,
-              style: const TextStyle(color: Colors.white, fontSize: 100),
-            )),
-      ),
-    );
-  }
-}
-
-class ButtonConversionWidget extends StatelessWidget {
-  const ButtonConversionWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ButtonConversion('AC'),
-        ButtonConversion('+/-'),
-        ButtonConversion('%'),
-        ButtonOperator(
-          '/',
-        ),
-      ],
-    );
+    final result = model.result;
+    return GestureDetector(
+        child: FittedBox(
+            fit: BoxFit.fill,
+            child: SizedBox(
+                height: 110,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            maxLines: 1,
+                            model.formatText(result),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: result.length > 5 ? 60 : 100,
+                                fontWeight: FontWeight.w400),
+                            textAlign: TextAlign.end,
+                          )
+                        ])))));
   }
 }

@@ -1,93 +1,32 @@
-import 'package:calculator_add/widgets/calculator_,model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class ButtonCalculator extends StatelessWidget {
-  const ButtonCalculator(
-    this.btnTxt, {
-    super.key,
-  });
+class Button {
+  final String value;
+  final Color buttonColor;
+  final Color textColor;
 
-  final String btnTxt;
 
-  @override
-  Widget build(BuildContext context) {
-    final model = context.read<CalculatorViewModel>();
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(80, 80),
-          backgroundColor: Colors.white24,
-          maximumSize: const Size(100, 100),
-          shape: const CircleBorder(),
-          padding: const EdgeInsets.all(10),
-        ),
-        onPressed: () => model.onPressed(btnTxt),
-        child: Text(
-          btnTxt,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 35,
-          ),
-        ));
-  }
+  Button(this.value, this.buttonColor, this.textColor, );
 }
 
-class ButtonConversion extends StatelessWidget {
-  const ButtonConversion(
-    this.btnTxt, {
-    super.key,
-  });
-
-  final String btnTxt;
-
-  @override
-  Widget build(BuildContext context) {
-    final model = context.read<CalculatorViewModel>();
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(80, 80),
-          backgroundColor: Colors.white70,
-          maximumSize: const Size(100, 100),
-          shape: const CircleBorder(),
-          padding: const EdgeInsets.all(10),
-        ),
-        onPressed: () => model.onPressed(btnTxt),
-        child: Text(
-          btnTxt,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 35,
-          ),
-        ));
-  }
-}
-
-class ButtonOperator extends StatelessWidget {
-  const ButtonOperator(
-    this.btnTxt, {
-    super.key,
-  });
-
-  final String btnTxt;
-
-  @override
-  Widget build(BuildContext context) {
-    final model = context.read<CalculatorViewModel>();
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(80, 80),
-          backgroundColor: Colors.orange,
-          maximumSize: const Size(100, 100),
-          shape: const CircleBorder(),
-          padding: const EdgeInsets.all(10),
-        ),
-        onPressed: () => model.onPressed(btnTxt),
-        child: Text(
-          btnTxt,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 35,
-          ),
-        ));
-  }
-}
+List<Button> buttons = [
+  Button('AC', Colors.grey, Colors.white),
+  Button('+/-', Colors.grey, Colors.white),
+  Button('%', Colors.grey, Colors.white),
+  Button('/', Colors.orange, Colors.white),
+  Button('7', Colors.white24, Colors.white),
+  Button('8', Colors.white24, Colors.white),
+  Button('9', Colors.white24, Colors.white),
+  Button('*', Colors.orange, Colors.white),
+  Button('4', Colors.white24, Colors.white),
+  Button('5', Colors.white24, Colors.white),
+  Button('6', Colors.white24, Colors.white),
+  Button('-', Colors.orange, Colors.white),
+  Button('1', Colors.white24, Colors.white),
+  Button('2', Colors.white24, Colors.white),
+  Button('3', Colors.white24, Colors.white),
+  Button('+', Colors.orange, Colors.white),
+  Button('0', Colors.white24, Colors.white, ),
+  Button('.', Colors.white24, Colors.white),
+  Button('=', Colors.orange, Colors.white),
+];

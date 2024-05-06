@@ -1,80 +1,115 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 
 class CalculatorViewModel extends ChangeNotifier {
-  String output = '0';
+  String result = '0';
+
+  String output = '';
   String currentNumber = '';
-  dynamic result = 0;
-  final String buttonTxtZero = '0';
+  String resultOperation = '';
 
-  Future<void> onPressed(String text) async {
-    if (text == '=') {
-      result = calculate();
-      output = result.toString();
-      currentNumber = output;
-      notifyListeners();
-    } else if (text == 'AC') {
-      output = '0';
-      currentNumber = '';
-      result = 0;
-      notifyListeners();
-    } else if (text == '%') {
-      int number = int.parse(currentNumber);
-      double percentage = number / 100;
-      output = percentage.toString();
-      currentNumber = output;
-      notifyListeners();
-    } else if (text == '+/-') {
-      if (currentNumber != '') {
-        if (currentNumber.startsWith('-')) {
-          currentNumber = currentNumber.substring(1);
-        } else {
-          currentNumber = '-$currentNumber';
-        }
-        output = currentNumber;
-        notifyListeners();
-      }
-      notifyListeners();
-    } else {
-      currentNumber += text;
-      output = currentNumber;
-      notifyListeners();
-    }
-  }
-
-  num? calculate() {
-    final parts = currentNumber.split(RegExp(r'(\+|\-|\*|\/)'));
-    var operandOne = double.parse(parts[0]);
-    var operandTwo = double.parse(parts[1]);
-
-    final operator = currentNumber.replaceAll(RegExp(r'[\d\.]'), '');
-
-    switch (operator) {
+  void onButtonPressed(String buttonText) {
+    switch (buttonText) {
       case '+':
-        return operandOne + operandTwo;
       case '-':
-        return operandOne - operandTwo;
       case '*':
-        return operandOne * operandTwo;
       case '/':
-        if (operandOne != 0 && operandTwo != 0) {
-          return operandOne / operandTwo;
+        if (output != '') {
+          _calculate();
+          notifyListeners();
         } else {
-          return null;
+          output = currentNumber;
+          notifyListeners();
         }
+        currentNumber = '';
+        resultOperation = buttonText;
+        notifyListeners();
+        break;
+      case '+/-':
+        currentNumber = convertStringToDouble(currentNumber) < 0
+            ? currentNumber.replaceAll('-', '')
+            : '-$currentNumber';
+        result = currentNumber;
+        notifyListeners();
+        break;
+      case '%':
+        if (currentNumber == '') {
+          return;
+        } else {
+          currentNumber =
+              (convertStringToDouble(currentNumber) / 100).toString();
+          result = currentNumber;
+        }
+        notifyListeners();
+        break;
+      case 'AC':
+        _resetOperation();
+        notifyListeners();
+        break;
+      case '=':
+        _calculate();
+        output = '';
+        resultOperation = '';
+        notifyListeners();
+        break;
+      case '.':
+        if (!currentNumber.contains('.')) {
+          currentNumber += '.';
+          resultOperation = currentNumber;
+          notifyListeners();
+        }
+        break;
       default:
-        return 0.0;
+        currentNumber = currentNumber += buttonText;
+        result = currentNumber;
+        notifyListeners();
     }
   }
 
-  String addSpaces(String output) {
+  double convertStringToDouble(String number) {
+    return double.tryParse(number) ?? 0;
+  }
+
+  void _resetOperation() {
+    currentNumber = '';
+    resultOperation = '';
+    result = '0';
+    output = '';
+    notifyListeners();
+  }
+
+  void _calculate() {
+    double _output = convertStringToDouble(output);
+    double _currentNumber = convertStringToDouble(currentNumber);
+
+    switch (resultOperation) {
+      case '-':
+        _output = _output - _currentNumber;
+        break;
+      case '+':
+        _output = _output + _currentNumber;
+        break;
+      case '*':
+        _output = _output * _currentNumber;
+        break;
+      case '/':
+        _output = _output / _currentNumber;
+        break;
+      default:
+        break;
+    }
+    currentNumber = (_output % 1 == 0 ? _output.toInt() : _output).toString();
+    result = currentNumber;
+    notifyListeners();
+  }
+
+  String formatText(String output) {
     String result = '';
     int count = 0;
-
-    for (int i = output.length - 1; i >= 0; i--) {
+    for (int i = output.length - 1; i >= 0 && count < 9; i--) {
       result = output[i] + result;
       count++;
-
-      if (count % 3 == 0 && i > 0) {
+      if (count % 3 == 0 && i > 0 && count < 9) {
         result = ' $result';
       }
     }
