@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class CalculatorViewModel extends ChangeNotifier {
   String result = '0';
 
