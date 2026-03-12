@@ -1,16 +1,66 @@
-# calculator_add
+# Calculator Add (Flutter)
 
-A new Flutter project.
+A calculator application built with Flutter using `Provider` and `ChangeNotifier` to separate UI and business logic.  
+The app supports basic arithmetic operations and additional calculator features, with a dark UI inspired by standard smartphone calculators.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+**Basic operations**
+- addition
+- subtraction
+- multiplication
+- division
 
-A few resources to get you started if this is your first Flutter project:
+**Extra functions**
+- sign change (`+/-`)
+- percentage calculation (`%`)
+- clear all (`AC`)
+- decimal input (`.`)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Output formatting**
+- limit of displayed number length
+- digit grouping for better readability
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**UI features**
+- active operator highlighting
+- adaptive result field
+- dynamic font scaling
+
+## Tech Stack
+
+- Flutter
+- Dart
+- Provider / ChangeNotifier — state management
+- StaggeredGridView — button layout
+
+## Project Structure
+
+- `lib/main.dart` — application entry point
+- `lib/screens/calculator_screen/calculator_app.dart` — calculator screen
+- `lib/screens/viewmodel/calculator_model.dart` — business logic and state
+- `lib/screens/widgets/entry_field_widget.dart` — result display widget
+- `lib/screens/widgets/buttons_grid_list.dart` — buttons grid
+- `lib/data/data_buttons.dart` — button configuration and model
+
+## Planned Improvements
+
+**Testing**
+- unit tests for `CalculatorViewModel`
+
+**Feature extensions**
+- additional mathematical operations
+- calculation history
+
+**UX improvements**
+- button press animations
+- haptic feedback
+- UI localization
+
+**Documentation**
+- screenshots or GIF demonstrations
+
+## How to Run
+
+Make sure Flutter is installed, then run:
+flutter pub get
+flutter run
